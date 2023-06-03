@@ -1,0 +1,132 @@
+repos:
+- repo: local
+  hooks:
+  - id: sync_poetry_precommit
+    name: sync_poetry_precommit
+    entry: python -m sync_poetry_precommit
+    language: system
+    always_run: true
+    pass_filenames: false
+    files: (.pre-commit-config.yaml|poetry.lock)
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.0.1
+  hooks:
+  - id: check-added-large-files
+  - id: check-ast
+  - id: check-case-conflict
+  - id: check-docstring-first
+  - id: check-executables-have-shebangs
+  - id: check-json
+  - id: check-merge-conflict
+  - id: check-shebang-scripts-are-executable
+  - id: check-symlinks
+  - id: check-xml
+  - id: check-yaml
+  - id: check-json
+  - id: debug-statements
+  - id: detect-private-key
+  - id: end-of-file-fixer
+  - id: mixed-line-ending
+  - id: pretty-format-json
+    args:
+    - --autofix
+    - --no-sort-keys
+    - --indent
+    - '4'
+  - id: trailing-whitespace
+- repo: https://github.com/igorshubovych/markdownlint-cli
+  rev: v0.31.1
+  hooks:
+  - id: markdownlint
+- repo: https://github.com/pre-commit/pygrep-hooks
+  rev: v1.9.0
+  hooks:
+  - id: python-use-type-annotations
+  - id: python-no-eval
+  - id: python-no-log-warn
+  - id: rst-backticks
+  - id: rst-directive-colons
+  - id: rst-inline-touching-normal
+- repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
+  rev: v2.4.0
+  hooks:
+  - id: pretty-format-ini
+    args:
+    - --autofix
+  - id: pretty-format-toml
+    args:
+    - --autofix
+- repo: https://github.com/asottile/seed-isort-config
+  rev: v2.2.0
+  hooks:
+  - id: seed-isort-config
+- repo: https://github.com/pycqa/isort
+  rev: 5.10.1
+  hooks:
+  - id: isort
+- repo: https://github.com/pre-commit/mirrors-mypy
+  rev: v0.971
+  hooks:
+  - id: mypy
+    additional_dependencies:
+    - numpy==1.23.4
+    - pytest==7.2.0
+    - python-dotenv==0.21.0
+    - setuptools==65.6.3
+    - types-PyYAML==6.0.12.2
+    - types-typed-ast==1.5.8.3
+    - types-ujson==5.6.0.0
+    - types-requests
+- repo: https://github.com/psf/black
+  rev: 22.6.0
+  hooks:
+  - id: black
+- repo: https://github.com/asottile/blacken-docs
+  rev: v1.12.1
+  hooks:
+  - id: blacken-docs
+    additional_dependencies:
+    - black==22.6.0
+- repo: https://github.com/PyCQA/bandit
+  rev: 1.7.4
+  hooks:
+  - id: bandit
+    args:
+    - -c
+    - pyproject.toml
+    additional_dependencies:
+    - toml==0.10.2
+- repo: https://github.com/pycqa/flake8
+  rev: 5.0.4
+  hooks:
+  - id: flake8
+    additional_dependencies:
+    - flake8-bugbear==22.12.6
+    - Flake8-pyproject==1.2.2
+    - pep8-naming==0.13.3
+    - flake8-builtins==2.1.0
+    - flake8-pytest-style==1.6.0
+    - flake8-comprehensions==3.10.1
+    - flake8-docstrings==1.6.0
+    - darglint==1.8.1
+    - pandas-vet==0.2.3
+- repo: local
+  hooks:
+  - id: pylint
+    name: pylint
+    entry: pylint
+    language: system
+    types:
+    - python
+    args:
+    - -rn
+    - -sn
+    - --rcfile=pyproject.toml
+    exclude: ^docs/
+    files: \.py$
+- repo: https://github.com/pycqa/pydocstyle
+  rev: 6.1.1
+  hooks:
+  - id: pydocstyle
+    additional_dependencies:
+    - toml==0.10.2
